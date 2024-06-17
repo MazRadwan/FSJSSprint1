@@ -4,6 +4,19 @@ const path = require('path');
 const myArgs = process.argv.slice(2);
 
 const configFilePath = path.join(__dirname, 'json', 'config.json');
+const defaultConfig = {
+    database: {
+        host: 'localhost',
+        port: 5432,
+        user: 'myuser',
+        password: 'mypassword',
+        database: 'exampledb',
+    },
+    server: {
+        port: 3000,
+    },
+    debug: true,
+};
 
 //Finds file path
 function getConfig() {
@@ -26,7 +39,7 @@ function configApp() {
 
     switch (command) {
         case '--show':  //Show the configuration settings
-            config = getConfig();  // Assign to config here
+            config = getConfig();  //Assign to config here
             if (config) {
                 console.log(config);
             } else {
@@ -40,7 +53,7 @@ function configApp() {
         case '--set':    //Set the configuration settings
             const key = myArgs[2];
             const value = myArgs[3];
-            config = getConfig() || defaultConfig;  // Assign to config here
+            config = getConfig() || defaultConfig;  //Assign to config here
             config[key] = value;
             setConfig(config);
             console.log(`Set ${key} to ${value} in config.`);
@@ -52,5 +65,5 @@ function configApp() {
 }
 
 module.exports = {
-    configApp,
+    configApp
 };
