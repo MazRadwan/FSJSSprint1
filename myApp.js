@@ -4,7 +4,8 @@ const fs = require("fs");
 const myArgs = process.argv.slice(2);
 
 const {initApp} = require("./init.js")
-
+const {configApp} = require("./config.js")
+const {tokenApp} = require("./token.js")
 
 
 
@@ -19,6 +20,12 @@ switch(myArgs[0]){
     case 'config':
     case 'c':
         if(DEBUG) console.log("this is the config")
+            configApp()
+        break;
+    case 'token':
+    case 't':
+        if(DEBUG) console.log("this is the token")
+            tokenApp()
         break;
     case 'help':
     case 'h':
