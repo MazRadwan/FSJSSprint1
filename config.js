@@ -22,10 +22,11 @@ function setConfig(config) {
 //All of the commands
 function configApp() {
     const command = myArgs[1];
+    let config;  //Declare config here
 
     switch (command) {
         case '--show':  //Show the configuration settings
-            const config = getConfig();
+            config = getConfig();  // Assign to config here
             if (config) {
                 console.log(config);
             } else {
@@ -39,7 +40,7 @@ function configApp() {
         case '--set':    //Set the configuration settings
             const key = myArgs[2];
             const value = myArgs[3];
-            const config = getConfig() || defaultConfig;
+            config = getConfig() || defaultConfig;  // Assign to config here
             config[key] = value;
             setConfig(config);
             console.log(`Set ${key} to ${value} in config.`);
