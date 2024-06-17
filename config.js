@@ -52,6 +52,5 @@ function configApp() {
 }
 
 module.exports = {
-    initApp,
     configApp,
 };
