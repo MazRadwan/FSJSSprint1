@@ -4,7 +4,7 @@ const fs = require("fs");
 const myArgs = process.argv.slice(2);
 
 const {initApp} = require("./init.js")
-
+const {configApp} = require("./config.js")
 
 
 
@@ -17,6 +17,9 @@ switch(myArgs[0]){
             initApp();
         break;
     case 'config':
+        if (DEBUG) console.log("this is the config")
+            configApp();
+        break;
     case 'c':
         if(DEBUG) console.log("this is the config")
         break;
