@@ -2,29 +2,34 @@ const fs = require('fs');
 const crc32 = require('crc/crc32');
 const myArgs = process.argv.slice(2);
 const {format,add} = require("date-fns")
-
+const {tokenTempl} = require("./templates")
 
 function tokenCount(){
     if(DEBUG)console.log("--count")
+        return new Promise(function(resolve,reject){
+            fs.readFile(__dirname+'/json/tokens.json','utf-8',(err,data)=>{
+                if(err)
+                    reject(err)
+                else{
+                    let tokens = JSON.parse(data);
+                    let count = Object.keys(tokens).length - 1
+                    console.log(`The amount of tokens are: ${count}`)
+                    resolve(count)
+                }
+            })
+    })
 }
 
 function newToken(username){
     if(DEBUG)console.log("--new")
-        let newToken = JSON.parse(`{
-            "created": "1969-01-31 12:30:00",
-            "username": "username",
-            "email": "user@example.com",
-            "phone": "5556597890",
-            "token": "token",
-            "expires": "1969-02-03 12:30:00",
-            "confirmed": "tbd"
-        }`);
+    let newToken = tokenTempl;
+    JSON.stringify(tokenTempl)
     let now = new Date()
     let expire = add(now,3)
     newToken.created =`${format(now,'dd-MM-yyyy ss:mm:HH')}`;
     newToken.username=username
     newToken.token = crc32(username).toString(8)
-    newToken.created =`${format(expire,'dd-MM-yyyy ss:mm:HH')}`;
+    newToken.expires =`${format(expire,'dd-MM-yyyy ss:mm:HH')}`;
     
     fs.readFile(__dirname+'/json/tokens.json','utf-8',(error,data)=>{
         if(error) throw error;
@@ -43,9 +48,36 @@ function newToken(username){
     return newToken.token;
 }
 
-function upd(){
-    if(DEBUG)console.log("--upd")
+function updP(username,phone){
+    if(DEBUG)console.log("--upd phone")
+    upd(username,{phone:phone})
 }
+function updE(username,email){
+    if(DEBUG)console.log("--upd email")
+    upd(username,{email:email})
+}
+
+function upd(username,newData){
+    if(DEBUG)console.log("upd()")
+    fs.readFile(__dirname+'/json/tokens.json','utf-8',(error,data)=>{
+        if(error) throw error;
+        let tokens = JSON.parse(data);
+        let user = tokens.find(u=>u.username===username)
+        if(user){
+            Object.assign(user,newData)
+            fs.writeFile(__dirname+'/json/tokens.json',JSON.stringify(tokens,null,2),'utf-8',(err)=>{
+                if(err) console.log(err)
+                else{
+            console.log(`user ${username} has benn updated with ${JSON.stringify(newData)}`)
+            }
+            })
+        }else{
+            console.log("a user with that username was not found")
+        }
+    })
+}
+
+
 function search(){
     if(DEBUG)console.log("--search")
 }
@@ -67,7 +99,19 @@ function tokenApp(){
         }
         break
     case '--upd':
-        upd()
+        if(myArgs.length<4){
+            console.log("ERROR invalid syntax")
+        }else{
+            const[field, username, newValue] = [myArgs[2],myArgs[3],myArgs[4]]
+            if(field === 'p'){
+                updP(username,newValue)
+            }
+            else if(field === 'e'){
+                updE(username,newValue)
+            }else{
+                console.log('ERROR unknown update field')
+            }
+        }
         break
     case '--search':
         search()
