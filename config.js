@@ -47,13 +47,17 @@ function configApp() {
             }
             break;
         case '--reset':   //Reset the configuration settings
-            setConfig(defaultConfig);
+            config = setConfig(defaultConfig);
+            if (config) {
             console.log('Config has been reset to default.');
+            } else {
+                console.log('Config file not found.')
+            }
             break;
         case '--set':    //Set the configuration settings
             const key = myArgs[2];
             const value = myArgs[3];
-            config = getConfig() || defaultConfig;  //Assign to config here
+            config = getConfig() || defaultConfig;  //Assign to config
             config[key] = value;
             setConfig(config);
             console.log(`Set ${key} to ${value} in config.`);
