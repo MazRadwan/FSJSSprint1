@@ -6,6 +6,7 @@ const myArgs = process.argv.slice(2);
 const {initApp} = require("./init.js")
 const {configApp} = require("./config.js")
 const {tokenApp} = require("./token.js")
+const {searchApp} = require("./search.js")
 
 
 
@@ -29,6 +30,11 @@ switch(myArgs[0]){
         break;
     case 'help':
     case 'h':
+    case 'search':
+    case 's':
+        if(DEBUG) console.log("this is the search")
+            searchApp(myArgs.slice(1));
+        break;
     default:
         if(DEBUG) console.log("this is the help") 
         fs.readFile(__dirname+"/help.txt",(error,data)=>{
