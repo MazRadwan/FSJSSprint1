@@ -9,7 +9,6 @@ const configjson = {
     database: 'exampledb'
 };
 
-
 const tokenTempl = {
     created: '1969-01-31 12:30:00',
     username: 'username',
@@ -28,9 +27,43 @@ const tokenjson = [{
     expires: '1969-02-03 12:30:00'
   }];
 
+const ejs=`<!doctype html>
+<html>
+<body>
+    <style>
+        body{
+            text-align: center;
+            background-color: burlywood;
+            
+        }
+        input{
+            background-color: aquamarine;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        button{
+            background-color: rebeccapurple;
+            color: white;
+            border-radius: 20px;
+        }
+        
+    </style>
+    <h1>
+    Add a new user token:<br />
+</h1>
+    <form action="/" method="post">
+        <input type="text" name="username" /><br />
+        <button>Save</button>
+    </form>
+
+</body>
+</html>`
+
+
 module.exports = {
     folders,
     configjson,
     tokenjson,
     tokenTempl,
+    ejs,
 };
