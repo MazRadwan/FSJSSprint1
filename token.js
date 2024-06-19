@@ -78,11 +78,24 @@ function upd(username,newData){
 }
 
 
-function search(){
-    if(DEBUG)console.log("--search")
+function search(params){
+    if(DEBUG) console.log("--search")
+        fs.readFile(__dirname+'/json/tokens.json', (err, data) => {
+            if (err) throw err;
+            
+            let users = JSON.parse(data);
+            let query = params.join(' '); //Combine all arguments into a single query string
+            
+            //Filter the users based on the query
+            let results = users.filter(user => 
+                user.username.includes(query) || 
+                user.email.includes(query) || 
+                user.phone.includes(query)
+            );
+            
+            console.log(results.length > 0 ? results : "No users found.");
+        });
 }
-
-
 
 
 function tokenApp(){
@@ -114,12 +127,11 @@ function tokenApp(){
         }
         break
     case '--search':
-        search()
+        search(myArgs.slice(2)) //This line was modified to include parameters
         break
 }
 }
 
 module.exports = {
     tokenApp,
-    newToken,
   }
