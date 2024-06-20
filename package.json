@@ -1,7 +1,50 @@
 {
+  "name": "myapp-cli",
+  "version": "1.0.0",
+  "description": "The Command Line Interface (CLI) for MyApp",
+  "main": "myApp.js",
+  "scripts": {
+    "start": "-- watch node myApp.js",
+    "watch": "node --watch myApp.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "init": "node myApp.js init --all",
+    "init:help": "node myApp.js init --help",
+    "init:mk": "node myApp.js init --mk",
+    "init:cat": "node myApp.js init --cat",
+    "config": "node myApp.js config --show",
+    "config:reset": "node myApp.js config --reset",
+    "config:set": "node myApp.js config --set <option> <value>",
+    "token": "node myApp.js token --count",
+    "token:new": "node myApp.js token --new <username>",
+    "token:upd:phone": "node myApp.js token --upd p <username> <phone>",
+    "token:upd:email": "node myApp.js token --upd e <username> <email>",
+    "token:search:username": "node myApp.js token --search u <username>",
+    "token:search:email": "node myApp.js token --search e <email>",
+    "token:search:phone": "node myApp.js token --search p <phone>",
+    "help": "node myApp.js --help"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MazRadwan/FSJSSprint1.git"
+  },
+  "keywords": [
+    "CLI",
+    "user-management",
+    "token",
+    "configuration"
+  ],
+  "author": "Evan, Chris, and Maz",
+  "license": "MIT",
   "dependencies": {
     "crc": "^4.3.2",
     "date-fns": "^3.6.0",
     "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=12.0.0"
   }
 }
