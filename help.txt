@@ -4,21 +4,23 @@ Usage:
 
 myapp --help          displays help
 
-myapp init            initialize the app
-myapp init --mk       create all the app folders
-myapp init --cat      create all the app files
-myapp init --all      create all the folders and files
+myapp init --help     displays help for the init command
+myapp init --mk       creates all the app folders
+myapp init --cat      creates the config file with default settings and the help files
+myapp init --all      creates all the folders and files
 
 myapp config          create or change the app configuration
 myapp config --show   show the contents of the config file
 myapp config --reset  reset back to default the config file
-myapp config --set    set a specific attribute of the config file
+myapp config --set <option> <value>  set a specific attribute of the config file
 
 myapp token           manage the user tokens
 myapp token --count   provide a count of all the tokens
 myapp token --new <username>   add a new token
-myapp token --upd p <username> <phone> updates ta json entry with new phone number
-myapp token --upd e <username> <email> updates ta json entry with new email number
-myapp token --search u <username> gets a token for a given username
-myapp token --search e <email> gets a token for a given email
-myapp token --search p <phone> gets a token for a given phone number
+myapp token --upd p <username> <phone>  updates a JSON entry with new phone number
+myapp token --upd e <username> <email>  updates a JSON entry with new email number
+myapp token --search u <username>  gets a token for a given username
+myapp token --search e <email>  gets a token for a given email
+myapp token --search p <phone>  gets a token for a given phone number
+
+myapp status          shows the current status of initialization and configuration
