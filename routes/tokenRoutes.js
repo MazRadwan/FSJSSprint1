@@ -7,7 +7,7 @@ const myEmitter = require("../logEvents");
 router.get("/", (req, res, next) => {
   try {
     myEmitter.emit("log", "INFO", "Token creation form accessed", req);
-    res.render("pages/newToken");
+    res.render("pages/newToken", { token: null });
   } catch (error) {
     myEmitter.emit(
       "log",
@@ -34,7 +34,7 @@ router.post("/", (req, res, next) => {
     }
     const token = newToken(username);
     myEmitter.emit("log", "INFO", `Token created for user: ${username}`, req);
-    res.render("pages/token", { username, token });
+    res.render("pages/newToken", { token });
   } catch (error) {
     myEmitter.emit(
       "log",
@@ -44,36 +44,6 @@ router.post("/", (req, res, next) => {
     );
     next(error);
   }
-});
-
-// Example of another route, e.g., for validating a token
-router.get("/validate/:token", (req, res, next) => {
-  try {
-    const { token } = req.params;
-    // Assume we have a validateToken function
-    const isValid = validateToken(token);
-    myEmitter.emit(
-      "log",
-      "INFO",
-      `Token validation attempt for: ${token}`,
-      req
-    );
-    res.json({ isValid });
-  } catch (error) {
-    myEmitter.emit(
-      "log",
-      "ERROR",
-      `Error validating token: ${error.message}`,
-      req
-    );
-    next(error);
-  }
-});
-
-// Error handling middleware
-router.use((err, req, res, next) => {
-  myEmitter.emit("log", "ERROR", `Token route error: ${err.message}`, req);
-  res.status(500).render("pages/error", { error: err });
 });
 
 module.exports = router;

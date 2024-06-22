@@ -1,8 +1,9 @@
-global.DEBUG = true;
+global.DEBUG = process.env.DEBUG === "true";
 const express = require("express");
 const path = require("path");
 const myEmitter = require("./logEvents");
 const tokenRoutes = require("./routes/tokenRoutes");
+const { tokenCount } = require("./token");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,10 +25,29 @@ app.set("views", path.join(__dirname, "views"));
 
 // Routes
 app.get("/", (req, res) => {
+  res.redirect("/home");
+});
+
+app.get("/home", (req, res) => {
   res.render("pages/home");
 });
 
 app.use("/token", tokenRoutes);
+
+app.get("/count", async (req, res) => {
+  try {
+    const count = await tokenCount();
+    res.render("pages/count", { count });
+  } catch (error) {
+    myEmitter.emit(
+      "log",
+      "ERROR",
+      `Error fetching token count: ${error.message}`,
+      req
+    );
+    res.status(500).render("pages/error", { error });
+  }
+});
 
 // 404 handler
 app.use((req, res) => {

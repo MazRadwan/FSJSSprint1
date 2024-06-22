@@ -3,11 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Token Generator - Home</title>
+    <title>Home</title>
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <h1>Welcome to Token Generator</h1>
-    <p>This application allows you to generate and manage tokens.</p>
-    <a href="/token">Create a New Token</a>
+    <header><%- include('../partials/navbar') %></header>
+    <main>
+      <h1>Welcome to the Token Management System</h1>
+      <div class="quick-actions">
+        <div class="tile">
+          <a href="/token">
+            <h2>Generate Token</h2>
+          </a>
+        </div>
+        <div class="tile">
+          <a href="/count">
+            <h2>Token Count</h2>
+          </a>
+        </div>
+      </div>
+    </main>
   </body>
 </html>

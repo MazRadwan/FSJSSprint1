@@ -296,4 +296,5 @@ function tokenApp() {
 module.exports = {
   tokenApp,
   newToken,
+  tokenCount,
 };
