@@ -1,4 +1,4 @@
-global.DEBUG = true; // Set to true if you want to enable debug logging
+global.DEBUG = process.env.DEBUG === "true";
 
 const fs = require("fs");
 const path = require("path");

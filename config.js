@@ -76,4 +76,5 @@ function configApp() {
 
 module.exports = {
   configApp,
+  DEBUG: true,
 };

@@ -4,7 +4,7 @@
   "description": "The Command Line Interface (CLI) for MyApp",
   "main": "myApp.js",
   "scripts": {
-    "start": "node myApp.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
     "init": "node myApp.js init --all",
@@ -27,6 +27,8 @@
   "dependencies": {
     "crc": "^4.3.2",
     "date-fns": "^3.6.0",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
