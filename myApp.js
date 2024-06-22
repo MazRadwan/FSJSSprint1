@@ -10,17 +10,7 @@ const { configApp } = require("./config.js");
 const { tokenApp } = require("./token.js");
 const { initHelp, configHelp, tokenHelp } = require("./helpTemplates");
 
-function displayHelp(helpFile) {
-  fs.readFile(helpFile, (error, data) => {
-    if (error) {
-      if (DEBUG)
-        console.log("Help file not found or could not be read:", helpFile);
-    } else {
-      console.log(data.toString());
-    }
-  });
-}
-
+// Function to create help files
 function createHelpFiles() {
   const helpDir = path.join(__dirname, "help");
   if (!fs.existsSync(helpDir)) {
@@ -40,11 +30,24 @@ function createHelpFiles() {
   console.log("tokenHelp.txt file created.");
 }
 
-// Create help files on startup
-createHelpFiles();
+// Conditionally create help files only for init command
+if (myArgs[0] === "init" || myArgs[0] === "i") {
+  createHelpFiles();
+}
 
-if (DEBUG) if (myArgs.length >= 1) console.log("myArgs: ", myArgs);
+// Function to display help
+function displayHelp(helpFile) {
+  fs.readFile(helpFile, (error, data) => {
+    if (error) {
+      if (DEBUG)
+        console.log("Help file not found or could not be read:", helpFile);
+    } else {
+      console.log(data.toString());
+    }
+  });
+}
 
+// Call the appropriate function based on the command
 switch (myArgs[0]) {
   case "init":
   case "i":
