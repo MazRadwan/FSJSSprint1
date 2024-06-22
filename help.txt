@@ -9,12 +9,12 @@ myapp init --mk       creates all the app folders
 myapp init --cat      creates the config file with default settings and the help files
 myapp init --all      creates all the folders and files
 
-myapp config          create or change the app configuration
+myapp config --help  displays help for the token command
 myapp config --show   show the contents of the config file
 myapp config --reset  reset back to default the config file
 myapp config --set <option> <value>  set a specific attribute of the config file
 
-myapp token           manage the user tokens
+myapp token --help    displays help for the token command
 myapp token --count   provide a count of all the tokens
 myapp token --new <username>   add a new token
 myapp token --upd p <username> <phone>  updates a JSON entry with new phone number
