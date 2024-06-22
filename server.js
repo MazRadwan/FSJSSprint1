@@ -1,11 +1,7 @@
-global.DEBUG = process.env.DEBUG === "true";
-
-Object.keys(require.cache).forEach(function (key) {
-  delete require.cache[key];
-});
-
+global.DEBUG = true;
 const express = require("express");
 const path = require("path");
+const myEmitter = require("./logEvents");
 const tokenRoutes = require("./routes/tokenRoutes");
 
 const app = express();
@@ -16,7 +12,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-// View engine setup
+// Logging middleware for page access
+app.use((req, res, next) => {
+  myEmitter.emit("log", "PAGE_ACCESS", "INFO", `${req.method} ${req.url}`);
+  next();
+});
+
+// Set EJS as the view engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -29,17 +31,25 @@ app.use("/token", tokenRoutes);
 
 // 404 handler
 app.use((req, res) => {
+  myEmitter.emit("log", "NOT_FOUND", "WARN", `404 - ${req.method} ${req.url}`);
   res.status(404).render("pages/404");
 });
 
 // Error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
+  myEmitter.emit("log", "SERVER_ERROR", "ERROR", `${err.name}: ${err.message}`);
   res.status(500).render("pages/error", { error: err });
 });
 
-// Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log("Views directory:", app.get("views"));
+  myEmitter.emit(
+    "log",
+    "SERVER_START",
+    "INFO",
+    `Server started on port ${PORT}`
+  );
 });
+
+module.exports = app;
