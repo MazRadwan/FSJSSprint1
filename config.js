@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const myEmitter = require("./logEvents");
 
 const myArgs = process.argv.slice(2);
 
@@ -18,48 +19,57 @@ const defaultConfig = {
   debug: true,
 };
 
-//Finds file path
 function getConfig() {
   if (fs.existsSync(configFilePath)) {
     const configFile = fs.readFileSync(configFilePath);
     return JSON.parse(configFile);
   } else {
+    myEmitter.emit(
+      "log",
+      "WARN",
+      "Config file not found, using default config"
+    );
     return null;
   }
 }
 
 function setConfig(config) {
   fs.writeFileSync(configFilePath, JSON.stringify(config, null, 2));
+  myEmitter.emit("log", "INFO", "Config file updated");
 }
 
-//All of the commands
 function configApp() {
   const command = myArgs[1];
-  let config; //Declare config here
+  let config;
 
   switch (command) {
-    case "--show": //Show the configuration settings
-      config = getConfig(); //Assign to config here
+    case "--show":
+      config = getConfig();
       if (config) {
         console.log(config);
+        myEmitter.emit("log", "INFO", "Config displayed");
       } else {
         console.log("Config file not found.");
+        myEmitter.emit("log", "WARN", "Attempted to show non-existent config");
       }
       break;
-    case "--reset": //Reset the configuration settings
+    case "--reset":
       setConfig(defaultConfig);
       console.log("Config has been reset to default.");
+      myEmitter.emit("log", "INFO", "Config reset to default");
       break;
-    case "--set": //Set the configuration settings
+    case "--set":
       const key = myArgs[2];
       const value = myArgs[3];
-      config = getConfig() || defaultConfig; //Assign to config here
+      config = getConfig() || defaultConfig;
       config[key] = value;
       setConfig(config);
       console.log(`Set ${key} to ${value} in config.`);
+      myEmitter.emit("log", "INFO", `Config updated: ${key} set to ${value}`);
       break;
     default:
       console.log("Invalid config command.");
+      myEmitter.emit("log", "WARN", "Invalid config command used");
       break;
   }
 }

@@ -25,11 +25,19 @@ function createHelpFiles() {
   const helpDir = path.join(__dirname, "help");
   if (!fs.existsSync(helpDir)) {
     fs.mkdirSync(helpDir);
+    console.log("Help directory created.");
+  } else {
+    console.log("Help directory already exists.");
   }
 
   fs.writeFileSync(path.join(helpDir, "initHelp.txt"), initHelp);
+  console.log("initHelp.txt file created.");
+
   fs.writeFileSync(path.join(helpDir, "configHelp.txt"), configHelp);
+  console.log("configHelp.txt file created.");
+
   fs.writeFileSync(path.join(helpDir, "tokenHelp.txt"), tokenHelp);
+  console.log("tokenHelp.txt file created.");
 }
 
 // Create help files on startup
