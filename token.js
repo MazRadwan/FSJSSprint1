@@ -25,6 +25,7 @@ function newToken(username) {
   let newToken = { ...tokenTempl };
   let now = new Date();
   let expire = add(now, { days: 3 });
+
   newToken.created = format(now, "dd-MM-yyyy ss:mm:HH");
   newToken.username = username;
   newToken.token = crc32(username).toString(8);

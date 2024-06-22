@@ -1,33 +1,24 @@
-const folders = ['models', 'views', 'routes', 'logs', 'json'];
+const folders = ["models", "views", "routes", "logs", "json"];
 
-const configjson = { 
-    name: 'AppConfigCLI',
-    version: '1.0.0',
-    description: 'The Command Line Interface (CLI) for the MyApp.',
-    main: 'myapp.js',
-    superuser: 'admin',
-    database: 'exampledb'
+const configjson = {
+  name: "AppConfigCLI",
+  version: "1.0.0",
+  description: "The Command Line Interface (CLI) for the MyApp.",
+  main: "myapp.js",
+  superuser: "admin",
+  database: "exampledb",
 };
 
 const tokenTempl = {
-    created: '1969-01-31 12:30:00',
-    username: 'username',
-    email: 'user@example.com',
-    phone: '5556597890',
-    token: 'token',
-    expires: '1969-02-03 12:30:00'
-  };
+  created: "",
+  username: "",
+  email: "",
+  phone: "",
+  token: "token",
+  expires: "",
+};
 
-const tokenjson = [{
-    created: '1969-01-31 12:30:00',
-    username: 'username',
-    email: 'user@example.com',
-    phone: '5556597890',
-    token: 'token',
-    expires: '1969-02-03 12:30:00'
-  }];
-
-const ejs=`<!doctype html>
+const ejs = `<!doctype html>
 <html>
 <body>
     <style>
@@ -57,13 +48,11 @@ const ejs=`<!doctype html>
     </form>
 
 </body>
-</html>`
-
+</html>`;
 
 module.exports = {
-    folders,
-    configjson,
-    tokenjson,
-    tokenTempl,
-    ejs,
+  folders,
+  configjson,
+  tokenTempl,
+  ejs,
 };

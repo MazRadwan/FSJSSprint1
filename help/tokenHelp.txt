@@ -1,0 +1,11 @@
+Usage: myapp token <option>
+
+Options:
+  --help      displays help for the token command
+  --count     provide a count of all the tokens
+  --new       add a new token
+  --upd p     updates a JSON entry with new phone number
+  --upd e     updates a JSON entry with new email number
+  --search u  gets a token for a given username
+  --search e  gets a token for a given email
+  --search p  gets a token for a given phone number

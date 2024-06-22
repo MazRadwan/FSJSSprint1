@@ -1,85 +1,65 @@
 const fs = require("fs");
-const fsPromise = require("fs").promises;
+const path = require("path");
 
 const myArgs = process.argv.slice(2);
 
-async function resetConfig() {
-  const defaultStatus = {
-    initialized: false,
-    filesCreated: false,
-    foldersCreated: false,
-    error: null,
-  };
+const configFilePath = path.join(__dirname, "json", "config.json");
+const defaultConfig = {
+  database: {
+    host: "localhost",
+    port: 5432,
+    user: "myuser",
+    password: "mypassword",
+    database: "exampledb",
+  },
+  server: {
+    port: 3000,
+  },
+  debug: true,
+};
 
-  try {
-    await fsPromise.writeFile(
-      "./status.json",
-      JSON.stringify(defaultStatus, null, 2)
-    );
-    console.log("Status has been reset to default.");
-  } catch (err) {
-    console.log("Error resetting status:", err);
+//Finds file path
+function getConfig() {
+  if (fs.existsSync(configFilePath)) {
+    const configFile = fs.readFileSync(configFilePath);
+    return JSON.parse(configFile);
+  } else {
+    return null;
   }
 }
 
-async function setConfig(attribute, value) {
-  try {
-    const data = await fsPromise.readFile("./status.json", "utf-8");
-    const config = JSON.parse(data);
-
-    // Convert value to boolean if necessary
-    if (value === "true") {
-      value = true;
-    } else if (value === "false") {
-      value = false;
-    }
-
-    if (config.hasOwnProperty(attribute)) {
-      config[attribute] = value;
-      await fsPromise.writeFile(
-        "./status.json",
-        JSON.stringify(config, null, 2)
-      );
-      console.log(
-        `Configuration attribute ${attribute} has been set to ${value}.`
-      );
-    } else {
-      console.log(`Attribute ${attribute} not found in configuration.`);
-    }
-  } catch (err) {
-    console.log("Error setting configuration:", err);
-  }
+function setConfig(config) {
+  fs.writeFileSync(configFilePath, JSON.stringify(config, null, 2));
 }
 
+//All of the commands
 function configApp() {
-  if (DEBUG) console.log("configApp()");
-  switch (myArgs[1]) {
-    case "--show":
-      fs.readFile(__dirname + "/status.json", (error, data) => {
-        if (error) {
-          console.log("Status file not found or could not be read.");
-        } else {
-          console.log("Initialization and Configuration Status:");
-          console.log(data.toString());
-        }
-      });
-      break;
-    case "--reset":
-      resetConfig();
-      break;
-    case "--set":
-      if (myArgs.length < 4) {
-        console.log(
-          "ERROR: Invalid syntax. Usage: config --set <attribute> <value>"
-        );
+  const command = myArgs[1];
+  let config; //Declare config here
+
+  switch (command) {
+    case "--show": //Show the configuration settings
+      config = getConfig(); //Assign to config here
+      if (config) {
+        console.log(config);
       } else {
-        setConfig(myArgs[2], myArgs[3]);
+        console.log("Config file not found.");
       }
       break;
+    case "--reset": //Reset the configuration settings
+      setConfig(defaultConfig);
+      console.log("Config has been reset to default.");
+      break;
+    case "--set": //Set the configuration settings
+      const key = myArgs[2];
+      const value = myArgs[3];
+      config = getConfig() || defaultConfig; //Assign to config here
+      config[key] = value;
+      setConfig(config);
+      console.log(`Set ${key} to ${value} in config.`);
+      break;
     default:
-      console.log(
-        "Invalid config command. Use --help to see available options."
-      );
+      console.log("Invalid config command.");
       break;
   }
 }
