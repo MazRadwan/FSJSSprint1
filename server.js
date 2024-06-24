@@ -8,12 +8,22 @@ const { tokenCount } = require("./token");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  myEmitter.emit(
+    "log",
+    "SERVER_START",
+    "INFO",
+    `Server started on port ${PORT}`
+  );
+});
+
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-// Logging middleware for page access
+// Logging middleware for page access logging
 app.use((req, res, next) => {
   myEmitter.emit("log", "PAGE_ACCESS", "INFO", `${req.method} ${req.url}`);
   next();
@@ -32,7 +42,7 @@ app.get("/home", (req, res) => {
   res.render("pages/home");
 });
 
-app.use("/token", tokenRoutes);
+app.use("/token", tokenRoutes); //for get/post tokens
 
 app.get("/count", async (req, res) => {
   try {
@@ -60,16 +70,6 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   myEmitter.emit("log", "SERVER_ERROR", "ERROR", `${err.name}: ${err.message}`);
   res.status(500).render("pages/error", { error: err });
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  myEmitter.emit(
-    "log",
-    "SERVER_START",
-    "INFO",
-    `Server started on port ${PORT}`
-  );
 });
 
 module.exports = app;

@@ -4,7 +4,7 @@
 
 To initialize the application and create the necessary configuration and help files, run the following command:
 
-`node myApp.js init --cat`
+`node myApp`
 
 - **Usage Section**:
 
