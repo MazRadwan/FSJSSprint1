@@ -6,17 +6,11 @@ const myArgs = process.argv.slice(2);
 
 const configFilePath = path.join(__dirname, "json", "config.json");
 const defaultConfig = {
-  database: {
-    host: "localhost",
-    port: 5432,
-    user: "myuser",
-    password: "mypassword",
-    database: "exampledb",
-  },
-  server: {
-    port: 3000,
-  },
-  debug: true,
+  host: "localhost",
+  port: 5432,
+  user: "myuser",
+  password: "mypassword",
+  database: "exampledb",
 };
 
 function getConfig() {
