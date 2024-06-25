@@ -30,10 +30,7 @@ function createHelpFiles() {
   console.log("tokenHelp.txt file created.");
 }
 
-// Conditionally create help files only for init command
-if (myArgs[0] === "init" || myArgs[0] === "i") {
-  createHelpFiles();
-}
+createHelpFiles();
 
 // Function to display help
 function displayHelp(helpFile) {
