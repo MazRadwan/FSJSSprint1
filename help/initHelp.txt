@@ -1,0 +1,7 @@
+Usage: myapp init <option>
+
+Options:
+  --help      displays help for the init command
+  --mk        creates all the app folders
+  --cat       creates the config file with default settings and the help files
+  --all       creates all the folders and files

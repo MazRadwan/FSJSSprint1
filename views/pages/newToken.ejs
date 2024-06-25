@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generate Token</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header><%- include('../partials/navbar') %></header>
+    <main>
+      <h1>Generate a New Token</h1>
+      <form action="/token" method="POST" class="token-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required />
+        <button type="submit">Generate Token</button>
+      </form>
+      <% if (token) { %>
+      <div class="token-message">
+        <p>Your generated token: <span class="token"><%= token %></span></p>
+      </div>
+      <% } %>
+    </main>
+  </body>
+</html>
