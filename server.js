@@ -18,7 +18,7 @@ app.listen(PORT, () => {
   );
 });
 
-// Middleware
+// Middleware urlencoding and json parsing serve static files
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -44,6 +44,7 @@ app.get("/home", (req, res) => {
 
 app.use("/token", tokenRoutes); //for get/post tokens
 
+// get token count route
 app.get("/count", async (req, res) => {
   try {
     const count = await tokenCount();

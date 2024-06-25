@@ -20,17 +20,21 @@ function createHelpFiles() {
     console.log("Help directory already exists.");
   }
 
-  fs.writeFileSync(path.join(helpDir, "initHelp.txt"), initHelp);
-  console.log("initHelp.txt file created.");
+  if (!fs.existsSync(path.join(helpDir, "initHelp.txt"))) {
+    fs.writeFileSync(path.join(helpDir, "initHelp.txt"), initHelp);
+    console.log("initHelp.txt file created.");
+  }
 
-  fs.writeFileSync(path.join(helpDir, "configHelp.txt"), configHelp);
-  console.log("configHelp.txt file created.");
+  if (!fs.existsSync(path.join(helpDir, "configHelp.txt"))) {
+    fs.writeFileSync(path.join(helpDir, "configHelp.txt"), configHelp);
+    console.log("configHelp.txt file created.");
+  }
 
-  fs.writeFileSync(path.join(helpDir, "tokenHelp.txt"), tokenHelp);
-  console.log("tokenHelp.txt file created.");
+  if (!fs.existsSync(path.join(helpDir, "tokenHelp.txt"))) {
+    fs.writeFileSync(path.join(helpDir, "tokenHelp.txt"), tokenHelp);
+    console.log("tokenHelp.txt file created.");
+  }
 }
-
-createHelpFiles();
 
 // Function to display help
 function displayHelp(helpFile) {
@@ -42,6 +46,16 @@ function displayHelp(helpFile) {
       console.log(data.toString());
     }
   });
+}
+
+// Create help files only when running the script without commands or with --help
+if (
+  !myArgs[0] ||
+  myArgs[0] === "help" ||
+  myArgs[0] === "--help" ||
+  myArgs[0] === "h"
+) {
+  createHelpFiles();
 }
 
 // Call the appropriate function based on the command

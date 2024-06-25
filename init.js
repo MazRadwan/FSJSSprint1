@@ -9,35 +9,54 @@ const { folders, configjson } = require("./templates");
 
 const myArgs = process.argv.slice(2);
 
-async function createDirectory(dirPath) {
+async function createDirectory(folder) {
+  const dirPath = path.join(__dirname, folder);
   try {
     if (!fs.existsSync(dirPath)) {
       await fsPromise.mkdir(dirPath, { recursive: true });
-      console.log(`Directory created: ${dirPath}`);
-      myEmitter.emit("log", "INFO", `Directory created: ${dirPath}`);
+      console.log(`Directory created: ${folder}`);
+      myEmitter.emit("log", "INFO", `Directory created: ${folder}`);
+    } else {
+      console.log(`Directory already exists: ${folder}`);
+      myEmitter.emit("log", "INFO", `Directory already exists: ${folder}`);
     }
   } catch (err) {
-    console.log(`Error creating directory ${dirPath}:`, err);
-    myEmitter.emit("log", "ERROR", `Failed to create directory: ${dirPath}`);
+    console.log(`Error creating directory ${folder}:`, err);
+    myEmitter.emit("log", "ERROR", `Failed to create directory: ${folder}`);
   }
 }
 
 async function makeFolders() {
   if (DEBUG) console.log("init.makeFolders");
-  let mkcount = 0;
+  let createdFolders = [];
+  let existingFolders = [];
   for (const folder of folders) {
     if (DEBUG) console.log(folder);
+    await createDirectory(folder);
     const dirPath = path.join(__dirname, folder);
-    await createDirectory(dirPath);
-    if (!fs.existsSync(dirPath)) {
-      mkcount++;
+    if (fs.existsSync(dirPath)) {
+      createdFolders.push(folder);
+    } else {
+      existingFolders.push(folder);
     }
   }
-  if (mkcount === 0) {
-    console.log("All folders already exist");
-  } else {
-    console.log(mkcount + " folders made");
-    myEmitter.emit("log", "INFO", `${mkcount} folders created`);
+  if (createdFolders.length > 0) {
+    console.log(
+      `${createdFolders.length} folders created: ${createdFolders.join(", ")}`
+    );
+    myEmitter.emit(
+      "log",
+      "INFO",
+      `${createdFolders.length} folders created: ${createdFolders.join(", ")}`
+    );
+  }
+  if (existingFolders.length > 0) {
+    console.log(`Existing folders: ${existingFolders.join(", ")}`);
+    myEmitter.emit(
+      "log",
+      "INFO",
+      `Existing folders: ${existingFolders.join(", ")}`
+    );
   }
 }
 
