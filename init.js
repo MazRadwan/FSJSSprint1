@@ -59,32 +59,39 @@ async function makeFolders() {
     );
   }
 }
-
 async function makeFiles() {
   if (DEBUG) console.log("init.makeFiles");
 
   try {
-    // Ensure json directory exists
-    await createDirectory(path.join(__dirname, "json"));
+    const jsonDir = path.join(__dirname, "json");
+
+    // Check if json directory exists
+    if (!fs.existsSync(jsonDir)) {
+      console.log(
+        "Error: 'json' directory does not exist. Please run 'init --mk' first."
+      );
+      myEmitter.emit("log", "ERROR", "'json' directory does not exist");
+      return;
+    }
 
     // Initialize tokens.json with an empty array
     let initialTokensData = JSON.stringify([], null, 2);
-    let tokensFileName = "./json/tokens.json";
-    if (!fs.existsSync(path.join(__dirname, tokensFileName))) {
+    let tokensFileName = path.join(jsonDir, "tokens.json");
+    if (!fs.existsSync(tokensFileName)) {
       await fsPromise.writeFile(tokensFileName, initialTokensData);
-      console.log(`File created: ${tokensFileName}`);
-      myEmitter.emit("log", "INFO", `File created: ${tokensFileName}`);
+      console.log(`File created: tokens.json`);
+      myEmitter.emit("log", "INFO", `File created: tokens.json`);
     } else {
       console.log("tokens.json already exists");
     }
 
     // Initialize config.json with configjson data
     let configData = JSON.stringify(configjson, null, 2);
-    let configFileName = "./json/config.json";
-    if (!fs.existsSync(path.join(__dirname, configFileName))) {
+    let configFileName = path.join(jsonDir, "config.json");
+    if (!fs.existsSync(configFileName)) {
       await fsPromise.writeFile(configFileName, configData);
-      console.log(`File created: ${configFileName}`);
-      myEmitter.emit("log", "INFO", `File created: ${configFileName}`);
+      console.log(`File created: config.json`);
+      myEmitter.emit("log", "INFO", `File created: config.json`);
     } else {
       console.log("config.json already exists");
     }
@@ -110,10 +117,12 @@ async function initApp() {
       myEmitter.emit("log", "INFO", "Application fully initialized");
       break;
     case "--cat":
+      if (DEBUG) console.log("make files only");
       await makeFiles();
       myEmitter.emit("log", "INFO", "Application files created");
       break;
     case "--mk":
+      if (DEBUG) console.log("make folders only");
       await makeFolders();
       myEmitter.emit("log", "INFO", "Application folders created");
       break;
