@@ -176,6 +176,18 @@ Logging is handled through an event emitter. Logs are saved in a structured dire
 
 This entry logs the creation of a new token for the user "john_doe".
 
+**Interface**
+
+On the main screen of the web form, you'll see two options for generating a token as well as getting the token count. There is also a header for these screens that you can access at any time.
+
+**Generate a Token**
+
+On this page, you can enter a username to generate and get a token number.
+
+**Token Count**
+
+On this page, you'll get a count of the tokens currently accessible.
+
 ## Conclusion
 
 MyApp provides a robust framework for initializing an application, managing configurations, handling tokens, and logging events. The included help files and logging system ensure that the application is easy to use and maintain.
