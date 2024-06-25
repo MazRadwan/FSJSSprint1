@@ -13,7 +13,7 @@ Options:
   --help      displays help for the config command
   --show      show the contents of the config file
   --reset     reset back to default the config file
-  --set       set a specific attribute of the config file`,
+  --set <option> <value> set a specific attribute of the config file`,
 
   tokenHelp: `Usage: myapp token <option>
 

@@ -6,6 +6,12 @@ MyApp is a Node.js application that provides various functionalities through a c
 
 ## Commands
 
+## Run CLI command
+
+`node myapp`
+
+This will run the cli and generate the help folder and files
+
 ### Initialization Commands
 
 The initialization commands help create the necessary directory and file structure for the application.
@@ -146,6 +152,8 @@ This command searches for tokens associated with the username "john_doe".
 The application includes an Express server that handles various routes and serves static files. The server logs page access and handles errors gracefully.
 
 ### Running the Server
+
+`node server`
 
 The server listens on the port specified by the PORT environment variable or defaults to port 3000.
 
