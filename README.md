@@ -14,11 +14,12 @@ The initialization commands help create the necessary directory and file structu
 `myapp init <option>`
 
 **Options:**
-
-`--help: Displays help for the init command.`
-`--mk: Creates all the app folders.`
-`--cat: Creates the config file with default settings and the help files.`
-`--all: Creates all the folders and files.`
+```
+--help: Displays help for the init command.
+--mk: Creates all the app folders.
+--cat: Creates the config file with default settings and the help files.
+--all: Creates all the folders and files.
+```
 
 **Example**
 To create all necessary folders and files, run:
@@ -36,12 +37,12 @@ Manage the configuration file.
 `myapp config <option>`
 
 **Options:**
-
-`--help: Displays help for the config command.`
-`--show: Shows the contents of the config file.`
-`--reset: Resets the config file to default settings.`
-`--set <key> <value>: Sets a specific attribute of the config file.`
-
+```
+--help: Displays help for the config command.
+--show: Shows the contents of the config file.
+--reset: Resets the config file to default settings.
+--set <key> <value>: Sets a specific attribute of the config file.
+```
 **Example**
 To reset the configuration file to its default settings, run:
 
@@ -58,16 +59,16 @@ Manage user tokens.
 `myapp token <option>`
 
 **Options:**
-
-`--help: Displays help for the token command.`
-`--count: Provides a count of all the tokens.`
-`--new <username>: Adds a new token for the specified username.`
-`--upd p <username> <phone>: Updates a JSON entry with a new phone number.`
-`--upd e <username> <email>: Updates a JSON entry with a new email.`
-`--search u <username>: Gets a token for a given username.`
-`--search e <email>: Gets a token for a given email.`
-`--search p <phone>: Gets a token for a given phone number.`
-
+```
+--help: Displays help for the token command.
+--count: Provides a count of all the tokens.
+--new <username>: Adds a new token for the specified username.
+--upd p <username> <phone>: Updates a JSON entry with a new phone number.
+--upd e <username> <email>: Updates a JSON entry with a new email.
+--search u <username>: Gets a token for a given username.
+--search e <email>: Gets a token for a given email.
+--search p <phone>: Gets a token for a given phone number.
+```
 **Example**
 To create a new token for the user "john_doe", run:
 
@@ -129,10 +130,11 @@ The application includes an Express server that handles various routes and serve
 The server listens on the port specified by the PORT environment variable or defaults to port 3000.
 
 **Routes:**
-`/home: Renders the home page.`
-`/token: Handles token-related requests.`
-`/count: Displays the token count.`
-
+```
+/home: Renders the home page.
+/token: Handles token-related requests.
+/count: Displays the token count.
+```
 **Error Handling**
 The server logs errors and renders appropriate error pages for 404 and 500 status codes.
 
