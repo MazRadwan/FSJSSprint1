@@ -4,6 +4,7 @@ const myArgs = process.argv.slice(2);
 const { format, add } = require("date-fns");
 const { tokenTempl } = require("./templates");
 const myEmitter = require("./logEvents");
+const path = require("path");
 
 function tokenCount() {
   if (DEBUG) console.log("--count");
