@@ -1,4 +1,6 @@
 # MyApp Documentation
+### Sprint 1 Documentation
+**Authors: Chris, Evan, Maz**
 
 ## Overview
 
